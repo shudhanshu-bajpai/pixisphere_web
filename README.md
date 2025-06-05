@@ -1,73 +1,107 @@
-# Welcome to your Lovable project
+# Pixisphere
 
-## Project info
+Pixisphere is a React + TypeScript web application for browsing and filtering a list of photographers. It features advanced filtering, search with debounce, pagination, and a responsive UI built with Tailwind CSS and custom UI components.
 
-**URL**: https://lovable.dev/projects/bd6a16b5-d1e9-46f5-aebe-ccaf277d64fa
+## Features
 
-## How can I edit this code?
+- **Photographer Listing:** Browse a paginated grid of photographers with profile cards.
+- **Filtering:** Filter by price range, rating, styles, and city.
+- **Search with Debounce:** Search photographers by name, location, or tags with input debouncing for performance.
+- **Sorting:** Sort results by rating, price (low/high), or most recent.
+- **Pagination:** Load more results with a "Load More" button.
+- **Responsive Design:** Mobile-friendly sidebar filters and adaptive layouts.
+- **Skeleton Loading:** Placeholder cards while data is loading.
 
-There are several ways of editing your application.
+## Project Structure
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/bd6a16b5-d1e9-46f5-aebe-ccaf277d64fa) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+  components/         # UI components (cards, sidebar, search bar, etc.)
+  hooks/
+    usePhotographers.ts  # Main data fetching, filtering, and pagination logic
+  lib/
+    utils.ts         # Utility functions
+  pages/
+    Index.tsx        # Main page
+    NotFound.tsx
+  types/
+    photographer.ts  # TypeScript types
+public/
+  favicon.ico
+  placeholder.svg
 ```
 
-**Edit a file directly in GitHub**
+## Setup Instructions
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. **Clone the repository:**
+   ```sh
+   git clone <your-repo-url>
+   cd pixisphere2
+   ```
 
-**Use GitHub Codespaces**
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+3. **Start the development server:**
+   ```sh
+   npm run dev
+   ```
 
-## What technologies are used for this project?
+4. **Open the app:**
+   Visit [http://localhost:5173](http://localhost:5173) in your browser.
 
-This project is built with:
+## Filtering Logic
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Filtering is handled in [`usePhotographers`](src/hooks/usePhotographers.ts):
 
-## How can I deploy this project?
+- **Search:** Matches photographer name, location, or tags (case-insensitive).
+- **Price:** Filters photographers within the selected price range.
+- **Rating:** Filters by minimum rating.
+- **Styles:** Filters by selected photography styles.
+- **City:** Filters by selected city.
+- **Sorting:** Results can be sorted by rating, price (ascending/descending), or most recent.
 
-Simply open [Lovable](https://lovable.dev/projects/bd6a16b5-d1e9-46f5-aebe-ccaf277d64fa) and click on Share -> Publish.
+Filtering is applied in a single pass using JavaScript's `Array.prototype.filter` and `sort` methods.
 
-## Can I connect a custom domain to my Lovable project?
+## Debounce in Search
 
-Yes, you can!
+The [`SearchBar`](src/components/SearchBar.tsx) component uses a debounce mechanism:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- User input is stored in a local state.
+- After 300ms of inactivity, the `onChange` callback is triggered to update the search query.
+- This prevents excessive re-filtering and improves performance.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Pagination
+
+Pagination is implemented as "Load More" in [`usePhotographers`](src/hooks/usePhotographers.ts):
+
+- The filtered list is sliced into pages of 6 items.
+- Clicking "Load More" appends the next page to the displayed list.
+- The `hasMore` flag indicates if more results are available.
+
+## Custom UI
+
+- Built with [Tailwind CSS](tailwind.config.ts) for styling.
+- Custom UI components for cards, sidebar, search, pagination, and more.
+- Icons from [lucide-react](https://lucide.dev/).
+
+## Data Source
+
+Photographer data is fetched from a API:
+```
+https://mocki.io/v1/ea3d2929-9445-4855-b48d-cb51019a69e2
+```
+
+## License
+
+MIT
+
+---
+
+**Project files referenced:**
+- [`usePhotographers`](src/hooks/usePhotographers.ts)
+- [`SearchBar`](src/components/SearchBar.tsx)
+- [`FilterSidebar`](src/components/FilterSidebar.tsx)
+- [`Index`](src/pages/Index.tsx)
