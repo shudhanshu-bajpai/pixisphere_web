@@ -76,7 +76,7 @@ const Index = () => {
             {/* Main Heading */}
             <div className="space-y-4">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
-                Maternity Photographers in{' '}
+              Photographers in{' '}
                 <span className="text-primary">Bengaluru</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -105,7 +105,7 @@ const Index = () => {
             <div className="flex items-center justify-center gap-3 mt-8">
               <Sparkles className="w-5 h-5 text-primary animate-pulse" />
               <Badge variant="outline" className="border-primary/50 text-primary bg-primary/5 px-4 py-2 text-sm">
-                🎯 AI Suggestion: Top-rated outdoor maternity photographers in Bengaluru
+                🎯 AI Suggestion: Top-rated outdoor photographers in Bengaluru
               </Badge>
             </div>
           </div>
